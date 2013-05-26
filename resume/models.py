@@ -2,14 +2,6 @@ from django.db import models
 
 
 class Resume(models.Model):
-    create_datetime        = models.DateTimeField()
-    last_modified_datetime = models.DateTimeField()
-    #contact_info           = models.OneToOneField(ContactInfo)
-    
-    def __unicode__(self):
-        return str(self.create_datetime)
-
-class ContactInfo(models.Model):
     
     # Constants
     MAX_NAME_LEN  = 32
@@ -21,7 +13,6 @@ class ContactInfo(models.Model):
     MAX_EMAIL_LEN = 256
 
     # Fields
-    resume        = models.OneToOneField(Resume, related_name='contact_info')
     first_name    = models.CharField(max_length=MAX_NAME_LEN)
     last_name     = models.CharField(max_length=MAX_NAME_LEN)
     address_line1 = models.CharField(max_length=MAX_ADDR_LEN)
@@ -31,6 +22,8 @@ class ContactInfo(models.Model):
     zip_code      = models.CharField(max_length=MAX_ZIP_LEN)
     phone_number  = models.CharField(max_length=MAX_PHONE_LEN)
     email         = models.EmailField(max_length=MAX_EMAIL_LEN)
+    create_datetime        = models.DateTimeField()
+    last_modified_datetime = models.DateTimeField()
 
     def __unicode__(self):
         return self.first_name + " " + self.last_name
