@@ -1,23 +1,21 @@
 from django.contrib import admin
-from resume.models import Resume, Employment
+from resume.models import Resume, Employer, Position
 
 # Class definitions for admin models
 
-class EmploymentInline(admin.StackedInline):
-    model = Employment
+class EmployerInline(admin.StackedInline):
+    
+    model = Employer
     extra = 1
-    employment_fields = [
-        'employer_name',
+    employer_fields = [
+        'name',
         'address_line1',
         'address_line2',
         'city',
         'state',
         'zip_code',
-        'start_date',
     ]
-    fieldsets = [
-        (None, {'fields': employment_fields}),
-    ]
+    fieldsets = [(None, {'fields': employer_fields})]
 
 class ResumeAdmin(admin.ModelAdmin):
     
@@ -43,9 +41,10 @@ class ResumeAdmin(admin.ModelAdmin):
         ('Date Information', {'fields': date_info_fields}),
     ]
     
-    inlines = [EmploymentInline]
+    inlines = [EmployerInline]
 
 
 # Register admin models
 admin.site.register(Resume, ResumeAdmin)
-
+admin.site.register(Employer)
+admin.site.register(Position)
