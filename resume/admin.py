@@ -13,6 +13,7 @@ class EmploymentInline(admin.StackedInline):
         'city',
         'state',
         'zip_code',
+        'start_date',
     ]
     fieldsets = [
         (None, {'fields': employment_fields}),
@@ -20,31 +21,28 @@ class EmploymentInline(admin.StackedInline):
 
 class ResumeAdmin(admin.ModelAdmin):
     
-    contact_info_fieldsets_dict = {
-        'fields': [
-            'first_name',
-            'last_name',
-            'address_line1',
-            'address_line2',
-            'city',
-            'state',
-            'zip_code',
-            'phone_number',
-            'email',
-        ],
-    }
+    contact_info_fields = [
+        'first_name',
+        'last_name',
+        'address_line1',
+        'address_line2',
+        'city',
+        'state',
+        'zip_code',
+        'phone_number',
+        'email',
+    ]
 
-    date_info_fieldsets_dict = {
-        'fields': [
-            'create_datetime',
-            'last_modified_datetime',
-        ],
-    }
+    date_info_fields = [
+        'create_datetime',
+        'last_modified_datetime',
+    ]
     
     fieldsets = [
-        ('Contact Info', contact_info_fieldsets_dict),
-        ('Date Information', date_info_fieldsets_dict),
+        ('Contact Info', {'fields': contact_info_fields}),
+        ('Date Information', {'fields': date_info_fields}),
     ]
+    
     inlines = [EmploymentInline]
 
 

@@ -43,6 +43,7 @@ class Employment(models.Model):
     city          = models.CharField(max_length=MAX_CITY_LEN)
     state         = models.CharField(max_length=MAX_STATE_LEN)
     zip_code      = models.CharField(max_length=MAX_ZIP_LEN)
+    start_date    = models.DateTimeField()
 
     def __unicode__(self):
         return self.employer_name
