@@ -1,5 +1,12 @@
 {% if resume %}
-<p>Resume for {{ resume.get_full_name }}</p>
+<h1>{{ resume.get_full_name }}</h1>
+<ol>
+    <li>{{ resume.address_line1 }}</li>
+    <li>{{ resume.address_line2 }}</li>
+    <li>{{ resume.city }}, {{ resume.state }}, {{ resume.zip_code }}</li>
+    <li>{{ resume.phone_number }}</li>
+    <li>{{ resume.email }}</li>
+</ol>
 {% else %}
 <p>No resumes avaliable</p>
 {% endif %}
