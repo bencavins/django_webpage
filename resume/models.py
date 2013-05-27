@@ -5,7 +5,7 @@ class Resume(models.Model):
     
     # Constants
     MAX_NAME_LEN  = 32
-    MAX_ADDR_LEN  = 64
+    MAX_ADDR_LEN  = 124
     MAX_CITY_LEN  = 32
     MAX_STATE_LEN = 16
     MAX_ZIP_LEN   = 16
@@ -27,3 +27,22 @@ class Resume(models.Model):
 
     def __unicode__(self):
         return self.first_name + " " + self.last_name
+
+class Employment(models.Model):
+
+    MAX_NAME_LEN = 124
+    MAX_ADDR_LEN  = 124
+    MAX_CITY_LEN  = 32
+    MAX_STATE_LEN = 16
+    MAX_ZIP_LEN   = 16
+    
+    resume        = models.ForeignKey(Resume)
+    employer_name = models.CharField(max_length=MAX_NAME_LEN)
+    address_line1 = models.CharField(max_length=MAX_ADDR_LEN)
+    address_line2 = models.CharField(max_length=MAX_ADDR_LEN)
+    city          = models.CharField(max_length=MAX_CITY_LEN)
+    state         = models.CharField(max_length=MAX_STATE_LEN)
+    zip_code      = models.CharField(max_length=MAX_ZIP_LEN)
+
+    def __unicode__(self):
+        return self.employer_name
