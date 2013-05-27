@@ -1,4 +1,5 @@
 {% if resume %}
+
 <h1>{{ resume.get_full_name }}</h1>
 <ol>
     <li>{{ resume.address_line1 }}</li>
@@ -7,6 +8,25 @@
     <li>{{ resume.phone_number }}</li>
     <li>{{ resume.email }}</li>
 </ol>
+
+<h2>Work History</h2>
+{% for employer in resume.employer_set.all %}
+<h3>{{ employer.name }}</h3>
+{% for position in employer.position_set.all %}
+<h4><i>{{ position.title }}</i></h4>
+<div>{{ position.start_date }} - {{ position.end_date }}</div>
+{% endfor %}
+{% endfor %}
+
+<h2>Education</h2>
+{% for education in resume.education_set.all %}
+<h3>{{ education.name }}</h3>
+<h4><i>{{ education.degree }}</i></h4>
+<div>{{ education.graduation_date }}</div>
+{% endfor %}
+
 {% else %}
+
 <p>No resumes avaliable</p>
+
 {% endif %}
