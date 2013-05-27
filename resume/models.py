@@ -4,7 +4,7 @@ from django.db import models
 class Resume(models.Model):
     
     # Constants
-    MAX_NAME_LEN  = 32
+    MAX_NAME_LEN  = 124
     MAX_ADDR_LEN  = 124
     MAX_CITY_LEN  = 32
     MAX_STATE_LEN = 16
@@ -55,3 +55,15 @@ class Position(models.Model):
     title = models.CharField(max_length=MAX_TITLE_LEN)
     start_date = models.DateField()
     end_date = models.DateField()
+
+class Education(models.Model):
+    """
+    Model class for education field of resume. `max_length` for CharFields
+    is set using constanct from Resume class.
+    """
+    resume = models.ForeignKey(Resume)
+    name = models.CharField(max_length=Resume.MAX_NAME_LEN)
+    degree = models.CharField(max_length=Resume.MAX_NAME_LEN)
+    city = models.CharField(max_length=Resume.MAX_CITY_LEN)
+    state = models.CharField(max_length=Resume.MAX_STATE_LEN)
+    graduation_date = models.DateField()
