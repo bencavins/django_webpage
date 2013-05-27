@@ -16,17 +16,21 @@ class Resume(models.Model):
     first_name    = models.CharField(max_length=MAX_NAME_LEN)
     last_name     = models.CharField(max_length=MAX_NAME_LEN)
     address_line1 = models.CharField(max_length=MAX_ADDR_LEN)
-    address_line2 = models.CharField(max_length=MAX_ADDR_LEN)
+    address_line2 = models.CharField(max_length=MAX_ADDR_LEN, blank=True)
     city          = models.CharField(max_length=MAX_CITY_LEN)
     state         = models.CharField(max_length=MAX_STATE_LEN)
-    zip_code      = models.CharField(max_length=MAX_ZIP_LEN)
+    zip_code      = models.CharField(max_length=MAX_ZIP_LEN, blank=True)
     phone_number  = models.CharField(max_length=MAX_PHONE_LEN)
     email         = models.EmailField(max_length=MAX_EMAIL_LEN)
     create_datetime        = models.DateTimeField()
     last_modified_datetime = models.DateTimeField()
 
+    def get_full_name(self):
+        return self.first_name + ' ' + self.last_name
+    get_full_name.short_description = 'Full Name'
+
     def __unicode__(self):
-        return self.first_name + " " + self.last_name
+        return self.get_full_name()
 
 class Employer(models.Model):
 
@@ -39,10 +43,10 @@ class Employer(models.Model):
     resume        = models.ForeignKey(Resume)
     name          = models.CharField(max_length=MAX_NAME_LEN)
     address_line1 = models.CharField(max_length=MAX_ADDR_LEN)
-    address_line2 = models.CharField(max_length=MAX_ADDR_LEN)
+    address_line2 = models.CharField(max_length=MAX_ADDR_LEN, blank=True)
     city          = models.CharField(max_length=MAX_CITY_LEN)
     state         = models.CharField(max_length=MAX_STATE_LEN)
-    zip_code      = models.CharField(max_length=MAX_ZIP_LEN)
+    zip_code      = models.CharField(max_length=MAX_ZIP_LEN, blank=True)
     
     def __unicode__(self):
         return self.name

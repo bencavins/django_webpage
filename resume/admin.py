@@ -56,6 +56,8 @@ class ResumeAdmin(admin.ModelAdmin):
     
     inlines = [EmployerInline, EducationInline]
 
+    list_display = ('get_full_name','create_datetime')
+
 
 # Register admin models
 admin.site.register(Resume, ResumeAdmin)
