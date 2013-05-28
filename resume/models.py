@@ -26,7 +26,16 @@ class Resume(models.Model):
     last_modified_datetime = models.DateTimeField()
 
     def get_full_name(self):
-        return self.first_name + ' ' + self.last_name
+        """
+        Returns first_name and last_name with the first letter or each name
+        capitalized, the rest lower-case, with a space separating each name.
+        """
+        s = self.first_name[:1].capitalize()
+        s += self.first_name[1:].lower()
+        s += ' '
+        s += self.last_name[:1].capitalize()
+        s += self.last_name[1:].lower()
+        return s
     get_full_name.short_description = 'Full Name'
 
     def __unicode__(self):
