@@ -8,6 +8,7 @@ import datetime
 
 from django.utils import timezone
 from django.test import TestCase
+from django.core.urlresolvers import reverse
 
 from resume.models import Resume
 
@@ -55,3 +56,15 @@ class ResumeMethodTests(TestCase):
         resume.first_name = 'bUfFy'
         resume.last_name = 'SUMmerS'
         self.assertEqual(resume.get_full_name(), 'Buffy Summers')
+
+
+class ResumeViewTests(TestCase):
+
+    def test_index_view_with_no_resumes(self):
+        """
+        If there are no resumes, the message 'No resumes avaliable' should 
+        be displayed.
+        """
+        response = self.client.get(reverse('resume:index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'No resumes avaliable')
