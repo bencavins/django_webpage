@@ -58,17 +58,17 @@ class Position(models.Model):
     employer = models.ForeignKey(Employer)
     title = models.CharField(max_length=MAX_TITLE_LEN)
     start_date = models.DateField()
-    end_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
 
 class Education(models.Model):
     """
     Model class for education field of resume. `max_length` for CharFields
     is set using constanct from Resume class.
     """
-    resume = models.ForeignKey(Resume)
+    resume = models.ForeignKey(Resume, blank=True, null=True)
     name = models.CharField(max_length=Resume.MAX_NAME_LEN)
     degree = models.CharField(max_length=Resume.MAX_NAME_LEN)
     city = models.CharField(max_length=Resume.MAX_CITY_LEN)
     state = models.CharField(max_length=Resume.MAX_STATE_LEN)
     start_date = models.DateField()
-    end_date = models.DateField(blank=True)
+    end_date = models.DateField(blank=True, null=True)

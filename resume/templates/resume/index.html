@@ -13,8 +13,16 @@
 {% for employer in resume.employer_set.all %}
 <h3>{{ employer.name }}</h3>
 {% for position in employer.position_set.all %}
+
 <h4><i>{{ position.title }}</i></h4>
-<div>{{ position.start_date|date:"F o" }} - {{ position.end_date|date:"F o" }}</div>
+<div>{{ position.start_date|date:"F o" }} - 
+{% if position.end_date %}
+{{ position.end_date|date:"F o" }}
+{% else %}
+Present
+{% endif %}
+</div>
+
 {% endfor %}
 {% endfor %}
 
@@ -22,7 +30,7 @@
 {% for education in resume.education_set.all %}
 <h3>{{ education.name }}</h3>
 <h4><i>{{ education.degree }}</i></h4>
-<div>{{ education.end_date|date:"F o" }}</div>
+
 {% endfor %}
 
 {% else %}
