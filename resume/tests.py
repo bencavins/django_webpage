@@ -23,6 +23,7 @@ def make_resume():
     resume = Resume()
     resume.first_name = 'Buffy'
     resume.last_name = 'Summers'
+    resume.save()
     return resume
 
 class ResumeMethodTests(TestCase):
@@ -68,3 +69,12 @@ class ResumeViewTests(TestCase):
         response = self.client.get(reverse('resume:index'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'No resumes avaliable')
+
+    def test_index_view_with_one_resume(self):
+        """
+        If there is only one resume in the database, display it.
+        """
+        resume = make_resume()
+        response = self.client.get(reverse('resume:index'))
+        print response.content
+
