@@ -44,20 +44,20 @@ class ResumeAdmin(admin.ModelAdmin):
         'phone_number',
         'email',
     ]
-
+    """
     date_info_fields = [
         'create_datetime',
         'last_modified_datetime',
     ]
-    
+    """
     fieldsets = [
         ('Contact Info', {'fields': contact_info_fields}),
-        ('Date Information', {'fields': date_info_fields}),
+        #('Date Information', {'fields': date_info_fields}),
     ]
     
     inlines = [EmployerInline, EducationInline]
 
-    list_display = ('get_full_name','create_datetime')
+    list_display = ('get_full_name','create_datetime','last_modified_datetime')
 
 
 # Register admin models

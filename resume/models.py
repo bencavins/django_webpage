@@ -22,8 +22,8 @@ class Resume(models.Model):
     zip_code      = models.CharField(max_length=MAX_ZIP_LEN, blank=True)
     phone_number  = models.CharField(max_length=MAX_PHONE_LEN)
     email         = models.EmailField(max_length=MAX_EMAIL_LEN)
-    create_datetime        = models.DateTimeField()
-    last_modified_datetime = models.DateTimeField()
+    create_datetime        = models.DateTimeField(auto_now_add=True)
+    last_modified_datetime = models.DateTimeField(auto_now=True)
 
     def get_full_name(self):
         """
