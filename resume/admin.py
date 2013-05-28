@@ -26,7 +26,8 @@ class EducationInline(admin.StackedInline):
         'degree',
         'city',
         'state',
-        'graduation_date',
+        'start_date',
+        'end_date',
     ]
     fieldsets = [(None, {'fields': education_fields})]
 

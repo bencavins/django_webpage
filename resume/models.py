@@ -70,4 +70,5 @@ class Education(models.Model):
     degree = models.CharField(max_length=Resume.MAX_NAME_LEN)
     city = models.CharField(max_length=Resume.MAX_CITY_LEN)
     state = models.CharField(max_length=Resume.MAX_STATE_LEN)
-    graduation_date = models.DateField()
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True)
