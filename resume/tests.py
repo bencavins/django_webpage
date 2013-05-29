@@ -20,7 +20,7 @@ def make_resume(first_name='Buffy',
                 email='vampslayer777@aol.com',):
     """
     This is a factory method for creating and saving resumes in the database.
-    All fields in the the resume class are optional arguments except those that 
+    All fields in the resume class are optional arguments except those that 
     are auto-filled.
     """
     resume = Resume()
@@ -36,8 +36,27 @@ def make_resume(first_name='Buffy',
     resume.save()
     return resume
 
-def make_employer():
+def make_employer(resume=make_resume(),
+                  name="The Watcher's Council",
+                  address_line1='Somewhere in Britain',
+                  address_line2='',
+                  city='British City',
+                  state='British State',
+                  zip_code=''):
+    """
+    This is a factory method for creating and saving employers in the database.
+    All fields in the Employer class are optional arguments. If a corresponding
+    resume is not given, a default one is created and assigned using
+    make_resume().
+    """
     employer = Employer()
+    employer.resume = resume
+    employer.name = name
+    employer.address_line1 = address_line1
+    employer.address_line2 = address_line2
+    employer.city = city
+    employer.state = state
+    employer.zip_code = zip_code
     employer.save()
     return employer
 
@@ -116,5 +135,5 @@ class EmployerModelTests(TestCase):
         """
         The __unicode__() method for Employer should just return the name field.
         """
-        employer = Employer(name='The Watchers Council')
+        employer = make_employer()
         self.assertEqual(employer.__unicode__(), employer.name)
