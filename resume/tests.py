@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
-from resume.models import Resume
+from resume.models import Resume, Employer, Position, Education
 
 def make_resume(first_name='Buffy', 
                 last_name='Summers',
@@ -20,8 +20,8 @@ def make_resume(first_name='Buffy',
                 email='vampslayer777@aol.com',):
     """
     This is a factory method for creating and saving resumes in the database.
-    All fields in the the resume class except those that are auto-filled are
-    optional arguments.
+    All fields in the the resume class are optional arguments except those that 
+    are auto-filled.
     """
     resume = Resume()
     resume.first_name = first_name
@@ -36,6 +36,10 @@ def make_resume(first_name='Buffy',
     resume.save()
     return resume
 
+def make_employer():
+    employer = Employer()
+    employer.save()
+    return employer
 
 class ResumeMethodTests(TestCase):
 
@@ -99,9 +103,18 @@ class ResumeViewTests(TestCase):
     def test_index_view_with_multiple_resumes(self):
         """
         If there is more than one resume in the database, the last one created
-        should be displayed
+        should be displayed.
         """
         resume_first = make_resume()
         resume_second = make_resume(first_name='Rupert', last_name='Giles')
         response = self.client.get(reverse('resume:index'))
         self.assertEqual(response.context['resume'], resume_second)
+
+class EmployerModelTests(TestCase):
+
+    def test_unicode(self):
+        """
+        The __unicode__() method for Employer should just return the name field.
+        """
+        employer = Employer(name='The Watchers Council')
+        self.assertEqual(employer.__unicode__(), employer.name)
