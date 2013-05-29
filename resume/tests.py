@@ -20,10 +20,24 @@ class SimpleTest(TestCase):
         self.assertEqual(1 + 1, 2)
 
 def make_resume(first_name='Buffy', 
-                last_name='Summers',):
+                last_name='Summers',
+                address_line1='1630 Revello Drive',
+                address_line2='',
+                city='Sunnydale',
+                state='CA',
+                zip_code='',
+                phone_number='(555) 555-5555',
+                email='vampslayer777@aol.com',):
     resume = Resume()
     resume.first_name = first_name
     resume.last_name = last_name
+    resume.address_line1 = address_line1
+    resume.address_line2 = address_line2
+    resume.city = city
+    resume.state = state
+    resume.zip_code = zip_code
+    resume.phone_number = phone_number
+    resume.email = email
     resume.save()
     return resume
 
