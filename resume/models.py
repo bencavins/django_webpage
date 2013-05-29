@@ -70,7 +70,7 @@ class Position(models.Model):
     end_date = models.DateField(blank=True, null=True)
 
     def __unicode__(self):
-        return self.employer
+        return self.title
 
 class Education(models.Model):
     """

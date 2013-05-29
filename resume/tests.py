@@ -9,56 +9,48 @@ from django.core.urlresolvers import reverse
 
 from resume.models import Resume, Employer, Position, Education
 
-def make_resume(first_name='Buffy', 
-                last_name='Summers',
-                address_line1='1630 Revello Drive',
-                address_line2='',
-                city='Sunnydale',
-                state='CA',
-                zip_code='',
-                phone_number='(555) 555-5555',
-                email='vampslayer777@aol.com',):
-    """
-    This is a factory method for creating and saving resumes in the database.
-    All fields in the resume class are optional arguments except those that 
-    are auto-filled.
-    """
-    resume = Resume()
-    resume.first_name = first_name
-    resume.last_name = last_name
-    resume.address_line1 = address_line1
-    resume.address_line2 = address_line2
-    resume.city = city
-    resume.state = state
-    resume.zip_code = zip_code
-    resume.phone_number = phone_number
-    resume.email = email
-    resume.save()
-    return resume
 
-def make_employer(resume=make_resume(),
-                  name="The Watcher's Council",
-                  address_line1='Somewhere in Britain',
-                  address_line2='',
-                  city='British City',
-                  state='British State',
-                  zip_code=''):
+def make_resume(**kwargs):
     """
-    This is a factory method for creating and saving employers in the database.
+    Factory method for creating and saving resumes in the test database. All
+    fields in the resume class are optional arguments except those that are
+    auto-filled.
+    """
+    default_args = {
+        'first_name': 'Buffy',
+        'last_name': 'Summers',
+        'address_line1': '1630 Revello Drive',
+        'address_line2': '',
+        'city': 'Sunnydale',
+        'state': 'CA',
+        'zip_code': '',
+        'phone_number': '(555) 555-5555',
+        'email': 'vampslayer777@aol.com',
+    }
+    for arg in kwargs:
+        default_args[arg] = kwargs[arg]
+    return Resume.objects.create(**default_args)
+
+def make_employer(**kwargs):
+    """
+    A factory method for creating and saving Employer objects in the database.
     All fields in the Employer class are optional arguments. If a corresponding
-    resume is not given, a default one is created and assigned using
+    resume is not given, a default one is created and assignment using 
     make_resume().
     """
-    employer = Employer()
-    employer.resume = resume
-    employer.name = name
-    employer.address_line1 = address_line1
-    employer.address_line2 = address_line2
-    employer.city = city
-    employer.state = state
-    employer.zip_code = zip_code
-    employer.save()
-    return employer
+    default_args = {
+        'resume': make_resume(),
+        'name': "The Watchers' Council",
+        'address_line1': 'Somewhere in Britain',
+        'address_line2': '',
+        'city': 'British City',
+        'state': 'British State',
+        'zip_code': '',
+    }
+    for arg in kwargs:
+        default_args[arg] = kwargs[arg]
+    return Employer.objects.create(**default_args)
+
 
 class ResumeMethodTests(TestCase):
 
@@ -100,6 +92,7 @@ class ResumeMethodTests(TestCase):
         resume = make_resume()
         self.assertEqual(resume.__unicode__(), resume.get_full_name())
 
+
 class ResumeViewTests(TestCase):
 
     def test_index_view_with_no_resumes(self):
@@ -128,6 +121,7 @@ class ResumeViewTests(TestCase):
         resume_second = make_resume(first_name='Rupert', last_name='Giles')
         response = self.client.get(reverse('resume:index'))
         self.assertEqual(response.context['resume'], resume_second)
+
 
 class EmployerModelTests(TestCase):
 
