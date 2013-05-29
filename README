@@ -1,1 +1,16 @@
 Personal Website
+
+
+======================================================================
+    How to use coverage.py
+======================================================================
+
+*** install ***
+https://pypi.python.org/pypi/coverage
+
+*** run ***
+coverage run --source='.' manage.py test myapp
+
+*** view report ***
+coverage report
+coverage report -m  # show line numbers for skipped statements
