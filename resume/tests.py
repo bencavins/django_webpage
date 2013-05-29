@@ -69,6 +69,13 @@ class ResumeMethodTests(TestCase):
         resume.last_name = 'SUMmerS'
         self.assertEqual(resume.get_full_name(), 'Buffy Summers')
 
+    def test_unicode(self):
+        """
+        __unicode__() should return the full name, obtained by calling 
+        get_full_name().
+        """
+        resume = make_resume()
+        self.assertEqual(resume.__unicode__(), resume.get_full_name())
 
 class ResumeViewTests(TestCase):
 

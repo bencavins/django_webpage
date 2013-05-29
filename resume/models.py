@@ -69,6 +69,9 @@ class Position(models.Model):
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
 
+    def __unicode__(self):
+        return self.employer
+
 class Education(models.Model):
     """
     Model class for education field of resume. `max_length` for CharFields
@@ -81,3 +84,7 @@ class Education(models.Model):
     state = models.CharField(max_length=Resume.MAX_STATE_LEN)
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
+
+    def __unicode__(self):
+        return self.name
+
