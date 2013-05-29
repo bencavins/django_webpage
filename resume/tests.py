@@ -19,10 +19,11 @@ class SimpleTest(TestCase):
         """
         self.assertEqual(1 + 1, 2)
 
-def make_resume():
+def make_resume(first_name='Buffy', 
+                last_name='Summers',):
     resume = Resume()
-    resume.first_name = 'Buffy'
-    resume.last_name = 'Summers'
+    resume.first_name = first_name
+    resume.last_name = last_name
     resume.save()
     return resume
 
@@ -72,9 +73,18 @@ class ResumeViewTests(TestCase):
 
     def test_index_view_with_one_resume(self):
         """
-        If there is only one resume in the database, display it.
+        If there is only one resume in the database, display it on index page.
         """
         resume = make_resume()
         response = self.client.get(reverse('resume:index'))
-        print response.content
+        self.assertEqual(response.context['resume'], resume)
 
+    def test_index_view_with_multiple_resumes(self):
+        """
+        If there is more than one resume in the database, the last one created
+        should be displayed
+        """
+        resume_first = make_resume()
+        resume_second = make_resume(first_name='Rupert', last_name='Giles')
+        response = self.client.get(reverse('resume:index'))
+        self.assertEqual(response.context['resume'], resume_second)
