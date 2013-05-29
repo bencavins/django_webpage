@@ -1,8 +1,5 @@
 """
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
+This file contains tests for the resume app. 
 """
 import datetime
 
@@ -11,13 +8,6 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 
 from resume.models import Resume
-
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
 
 def make_resume(first_name='Buffy', 
                 last_name='Summers',
@@ -28,6 +18,11 @@ def make_resume(first_name='Buffy',
                 zip_code='',
                 phone_number='(555) 555-5555',
                 email='vampslayer777@aol.com',):
+    """
+    This is a factory method for creating and saving resumes in the database.
+    All fields in the the resume class except those that are auto-filled are
+    optional arguments.
+    """
     resume = Resume()
     resume.first_name = first_name
     resume.last_name = last_name
@@ -40,6 +35,7 @@ def make_resume(first_name='Buffy',
     resume.email = email
     resume.save()
     return resume
+
 
 class ResumeMethodTests(TestCase):
 
