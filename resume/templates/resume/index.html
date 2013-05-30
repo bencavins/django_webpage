@@ -1,3 +1,7 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'resume/style.css' %}" />
+
 {% if resume %}
 
 <h1>{{ resume.get_full_name }}</h1>
