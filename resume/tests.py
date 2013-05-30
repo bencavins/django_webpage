@@ -35,7 +35,7 @@ def make_employer(**kwargs):
     """
     A factory method for creating and saving Employer objects in the database.
     All fields in the Employer class are optional arguments. If a corresponding
-    resume is not given, a default one is created and assignment using 
+    resume is not given, a default one is created and assigned using 
     make_resume().
     """
     default_args = {
@@ -51,8 +51,45 @@ def make_employer(**kwargs):
         default_args[arg] = kwargs[arg]
     return Employer.objects.create(**default_args)
 
+def make_position(**position_args):
+    """
+    A factory method for creating and saving Position objects in the database.
+    All fields in the Position class are optional arguments. If a corresponding
+    employer is not given, a default one is created and assigned using
+    make_employer()
+    """
+    default_args = {
+        'employer': make_employer(),
+        'title': 'Vampire Slayer',
+        'start_date': '1996-08-01',
+        'end_date': None,
+    }
+    for arg in position_args:
+        default_args[arg] = position_args[arg]
+    return Position.objects.create(**default_args)
 
-class ResumeMethodTests(TestCase):
+def make_education(**education_args):
+    """
+    A factory method for creating and saving Education objects in the database.
+    All fields in the Education class are optional arguments. If a corresponding
+    resume is not given, a default one is created and assigned using 
+    make_resume().
+    """
+    default_args = {
+        'resume': make_resume(),
+        'name': 'Sunnydale High',
+        'degree': 'High School Diploma',
+        'city': 'Sunnydale',
+        'state': 'CA',
+        'start_date': '1997-03-10',
+        'end_date': '1999-05-28',
+    }
+    for arg in education_args:
+        default_args[arg] = education_args[arg]
+    return Education.objects.create(**default_args)
+
+
+class ResumeModelTests(TestCase):
 
     def test_get_full_name(self):
         """
@@ -131,3 +168,25 @@ class EmployerModelTests(TestCase):
         """
         employer = make_employer()
         self.assertEqual(employer.__unicode__(), employer.name)
+
+
+class PositionModelTests(TestCase):
+
+    def test_unicode(self):
+        """
+        The __unicode__() method for Position should return the title field.
+        """
+        position = make_position()
+        self.assertEqual(position.__unicode__(), position.title)
+
+
+class EducationModelTests(TestCase):
+
+    def test_unicode(self):
+        """
+        The __unicode__() method for Education should return the name field.
+        """
+        education = make_education()
+        self.assertEqual(education.__unicode__(), education.name)
+
+
